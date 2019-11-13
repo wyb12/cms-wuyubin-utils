@@ -2,6 +2,7 @@ package com.wuyubin;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.DataInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -12,6 +13,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.Reader;
+import java.io.Writer;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -362,15 +364,15 @@ public class FileUtils {
 	}
 	/**
 	 * 
-	* @Title: download  
-	* 网络文件下载  
-	* @param @param realPath
-	* @param @param request
-	* @param @param response
-	* @param @param filename
-	* @param @throws FileNotFoundException     
-	* @return void    
-	* @throws
+	 * @Title: download  
+	 * 网络文件下载  
+	 * @param @param realPath
+	 * @param @param request
+	 * @param @param response
+	 * @param @param filename
+	 * @param @throws FileNotFoundException     
+	 * @return void    
+	 * @throws
 	 */
 	public static void download(String realPath,HttpServletRequest request,HttpServletResponse response,String filename) throws FileNotFoundException {
 
@@ -411,6 +413,30 @@ public class FileUtils {
 
 		}
 
+	}
+	/**
+	 * 把GBK文件转为UTF-8
+	 * 两个参数值可以为同一个路径
+	 * @param srcFileName 源文件
+	 * @param destFileName 目标文件
+	 * @throws IOException
+	 */
+	private static void transferFile(String srcFileName, String destFileName) throws IOException {
+		String line_separator = System.getProperty("line.separator"); 
+		FileInputStream fis = new FileInputStream(srcFileName);
+		StringBuffer content = new StringBuffer();
+		DataInputStream in = new DataInputStream(fis);
+		BufferedReader d = new BufferedReader(new InputStreamReader(in, "GBK"));  //源文件的编码方式
+		String line = null;
+		while ((line = d.readLine()) != null)
+			content.append(line + line_separator);
+		d.close();
+		in.close();
+		fis.close();
+
+		Writer ow = new OutputStreamWriter(new FileOutputStream(destFileName), "utf-8");  //需要转换的编码方式
+		ow.write(content.toString());
+		ow.close();
 	}
 
 }
