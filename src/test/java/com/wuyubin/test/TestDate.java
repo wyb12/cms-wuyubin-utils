@@ -1,4 +1,4 @@
-package com.wuyubin.test;
+/*package com.wuyubin.test;
 
 import static org.junit.Assert.assertTrue;
 
@@ -42,3 +42,4 @@ public class TestDate {
 
 	
 }
+*/
