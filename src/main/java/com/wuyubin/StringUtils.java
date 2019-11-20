@@ -175,6 +175,17 @@ public class StringUtils {
 	public static int getNum(int start,int end) {  
         return (int)(Math.random()*(end-start+1)+start);  
     } 
+	/**
+	 * 获取长整数类型的随机数
+	 * @param min
+	 * @param max
+	 * @return
+	 */  //  100   1000
+	public static long getRandomLong(long min,long max) {
+		//Random random = new Random();
+		double random = Math.random();// 0 ~ 1 
+		return (long)(random * (max-min+1) +  min);
+	}
 	/** 
      * 返回中文姓名 
      */ 
