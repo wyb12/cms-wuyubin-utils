@@ -14,11 +14,17 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.Reader;
 import java.io.Writer;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.apache.log4j.Logger;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  * @author 吴宇斌
@@ -26,6 +32,42 @@ import javax.servlet.http.HttpServletResponse;
  * 2019年11月9日
  */
 public class FileUtils {
+	
+
+	static Logger log=Logger.getLogger(FileUtils.class);
+	
+	
+	/**
+	 * 
+	 * @param file
+	 * @return  保存文件的相对路径
+	 * @throws IllegalStateException
+	 * @throws IOException
+	 */
+    public static String processFile(MultipartFile file,String updloadPath) throws IllegalStateException, IOException {
+    	
+    	log.info("updloadPath is "  + updloadPath);
+
+    	
+    	//1 求扩展名  "xxx.jpg"
+    	String suffixName =  file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf('.'));
+    	String fileNamePre = UUID.randomUUID().toString();
+    	// 计算出新的文件名称
+    	String fileName = fileNamePre + suffixName;
+    	
+    	SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
+    	String path = dateFormat.format(new Date());
+    	File pathFile  = new File(updloadPath + "/" + path);
+    	if(!pathFile.exists()) {
+    		pathFile.mkdirs();
+    	}
+    	
+    	// 最终的新的文件名称
+    	String newFileName = updloadPath + "/"+ path + "/" + fileName;
+    	file.transferTo(new File(newFileName));
+    	
+    	return path + "/" + fileName ;
+    }
 	/**
 	 * 
 	 * @Title: readFile  
