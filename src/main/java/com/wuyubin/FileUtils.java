@@ -7,6 +7,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
@@ -36,7 +37,10 @@ public class FileUtils {
 
 	static Logger log=Logger.getLogger(FileUtils.class);
 	
-	
+	public static BufferedReader readFile1(String readFile) throws Exception {
+		BufferedReader br = new BufferedReader(new FileReader(readFile));
+		return br;
+	}
 	/**
 	 * 
 	 * @param file
