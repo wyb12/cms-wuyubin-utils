@@ -125,7 +125,7 @@ public class StringUtils {
 	public static String getBirthday(){
 		GregorianCalendar gc = new GregorianCalendar();
 
-		int year = randBetween(2002, 2054);
+		int year = randBetween(1949, 2001);
 
 		gc.set(gc.YEAR, year);
 
@@ -292,6 +292,16 @@ public class StringUtils {
 	 */
 	public static int getNum(int start,int end) {  
 		return (int)(Math.random()*(end-start+1)+start);  
+	} 
+	/**
+	 * 获取指定长度的随机数字符串
+	 */
+	static Random rnd = new Random();
+	public static String getRandomNumber(int digCount) {
+	    StringBuilder sb = new StringBuilder(digCount);
+	    for(int i=0; i < digCount; i++)
+	        sb.append((char)('0' + rnd.nextInt(10)));
+	    return sb.toString();
 	} 
 	/**
 	 * 获取长整数类型的随机数
